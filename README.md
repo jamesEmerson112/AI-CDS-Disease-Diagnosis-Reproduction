@@ -1,6 +1,10 @@
 # AI-CDS-Disease-Diagnosis-Reproduction
 
+**Reproduction of:** *AI-Driven Clinical Decision Support: Enhancing Disease Diagnosis Exploiting Patients Similarity*
+
 An AI-powered clinical decision support system for disease diagnosis using sentence embeddings. This system predicts diagnoses based on symptom similarity using sent2vec embeddings and K-fold cross-validation.
+
+> **Note:** This repository reproduces the experiments from the paper *"AI-Driven Clinical Decision Support: Enhancing Disease Diagnosis Exploiting Patients Similarity"* by Comito et al. (2022), published in IEEE Access. The original authors proposed an innovative Clinical Decision Support (CDS) framework leveraging semantic similarity between patient symptoms and preliminary diagnoses through Natural Language Processing (NLP). By integrating electronic health records (EHR), semantic embeddings (Sent2Vec), and hybrid AI methodologies, the authors demonstrated improved accuracy and clinical interpretability in predicting discharge diagnoses for hospitalized patients.
 
 ## Overview
 
@@ -187,7 +191,32 @@ AI-CDS-Disease-Diagnosis-Reproduction/
 
 ## Citation
 
-If you use this code in your research, please cite the original paper or repository.
+This project reproduces the work from the following paper:
+
+**Paper Citation:**
+
+> Comito, C., Falcone, D., & Forestiero, A. (2022). *AI-Driven Clinical Decision Support: Enhancing Disease Diagnosis Exploiting Patients Similarity*. IEEE Access, 10, 6878–6888.  
+> DOI: [10.1109/ACCESS.2022.3142100](https://doi.org/10.1109/ACCESS.2022.3142100)
+
+**BibTeX:**
+```bibtex
+@article{comito2022ai,
+  title={AI-Driven Clinical Decision Support: Enhancing Disease Diagnosis Exploiting Patients Similarity},
+  author={Comito, Carmela and Falcone, Deborah and Forestiero, Agostino},
+  journal={IEEE Access},
+  volume={10},
+  pages={6878--6888},
+  year={2022},
+  publisher={IEEE},
+  doi={10.1109/ACCESS.2022.3142100}
+}
+```
+
+**Original Resources:**
+- Original codebase: [http://staff.icar.cnr.it/diseaseDiagnosis.zip](http://staff.icar.cnr.it/diseaseDiagnosis.zip)
+- Dataset: MIMIC-III v1.4 ([PhysioNet](https://physionet.org/content/mimiciii/))
+
+If you use this reproduction or the original work in your research, please cite the paper above.
 
 ## License
 
