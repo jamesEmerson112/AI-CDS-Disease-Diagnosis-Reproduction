@@ -25,6 +25,7 @@ MANIFEST
 
 # Cython
 *.c
+!util_cy.c
 *.cpp
 *.html
 .cython_cache/
@@ -74,6 +75,10 @@ results/
 ehthumbs.db
 Thumbs.db
 desktop.ini
+
+# Downloaded original source (duplicates our files)
+diseaseDiagnosis/
+# diseaseDiagnosis.zip
 
 # Logs
 *.log

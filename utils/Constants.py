@@ -1,6 +1,6 @@
 #COSTANT
 
-CH_DIR = "/home/fdeborah/PycharmProjects/MIMIC-IIIAnalisys"
+CH_DIR = "/Users/mrbam/Github/GitHub/AI-CDS-Disease-Diagnosis-Reproduction"
 FMT = "%d/%m/%Y %H:%M:%S"
 TRAIN = 'TrainingSet.txt'
 TEST = 'TestSet.txt'

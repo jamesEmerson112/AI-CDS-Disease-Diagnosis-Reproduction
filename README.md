@@ -16,9 +16,13 @@ This project implements a machine learning approach to disease diagnosis by:
 
 ## Prerequisites
 
-- **Python**: 3.6 or higher
+- **Python**: 3.8 or 3.9 (recommended)
+  - **⚠️ Important:** The pre-compiled `util_cy.c` file has compatibility issues with Python 3.10+
+  - For Python 3.10+, you'll need the original `.pyx` source file to recompile
 - **C Compiler**: Required for Cython compilation (GCC on Linux/Mac, MSVC on Windows)
-- **Pre-trained Model**: sent2vec or fasttext pre-trained model (BioWordVec or similar biomedical model recommended)
+- **Pre-trained Model**: `BioSentVec_PubMed_MIMICIII-bigram_d700.bin` (~700MB)
+  - This specific biomedical sentence embedding model is required
+  - Download from NCBI BioSentVec or biomedical NLP resources
 
 ### Required Python Packages
 - numpy
@@ -54,10 +58,42 @@ The `util_cy.c` file contains Cython-optimized methods. Compile it before runnin
 python setup.py build_ext --inplace
 ```
 
+**Note:** If compilation fails with Python 3.10+, you'll need to use Python 3.8 or 3.9, or obtain the original `.pyx` source file from the authors.
+
 ### 4. Download Pre-trained Model
-Download a pre-trained sent2vec or fasttext model (biomedical domain recommended):
-- Place the model file in the project directory
-- Update the model loading path in `util_cy.c` or `CS2V.py`
+Download the required BioSentVec model:
+
+**Required Model:**
+- **Filename:** `BioSentVec_PubMed_MIMICIII-bigram_d700.bin`
+- **Size:** ~700MB
+- **Location:** Place in the project root directory
+
+**Download Sources:**
+- NCBI BioSentVec: [https://ftp.ncbi.nlm.nih.gov/pub/lu/Suppl/BioSentVec/](https://ftp.ncbi.nlm.nih.gov/pub/lu/Suppl/BioSentVec/)
+- Original paper supplementary materials
+- Biomedical NLP model repositories
+
+The code expects this exact filename and will look for it in the current working directory.
+
+## Setup Verification
+
+After completing installation, verify your setup:
+
+```bash
+# Check Python version (should be 3.8.x or 3.9.x)
+python --version
+
+# Verify Cython module compiled successfully
+ls -lh util_cy*.so  # On Linux/Mac
+# or
+dir util_cy*.pyd    # On Windows
+
+# Confirm model file exists
+ls -lh BioSentVec_PubMed_MIMICIII-bigram_d700.bin
+
+# Test imports
+python -c "import util_cy; print('Cython module loaded successfully')"
+```
 
 ## Configuration
 
@@ -96,7 +132,7 @@ The script will:
 
 ### Expected Output
 - **Console**: Progress information for each fold
-- **Files**: 
+- **Files**:
   - `Prediction Output_[timestamp]/` - Prediction results for each fold
   - `Prediction Symptom Details_[timestamp]/` - Detailed symptom-level analysis
   - `PerformanceIndex.txt` - Aggregated performance metrics
@@ -174,20 +210,30 @@ AI-CDS-Disease-Diagnosis-Reproduction/
 
 **Import Error: No module named 'util_cy'**
 - Ensure Cython module is compiled: `python setup.py build_ext --inplace`
+- Check if `util_cy.so` (Linux/Mac) or `util_cy.pyd` (Windows) exists
+- Verify you're using Python 3.8 or 3.9
+
+**Cython Compilation Errors**
+- If using Python 3.10+: Switch to Python 3.8 or 3.9
+- The pre-compiled `util_cy.c` uses deprecated Python C API features
+- Alternative: Contact original authors for `.pyx` source to recompile
 
 **FileNotFoundError**
 - Verify `CH_DIR` in `utils/Constants.py` points to correct directory
 - Ensure all dataset files exist in `Dataset/Fold*/`
 
 **Model Loading Error**
-- Confirm pre-trained model file exists
-- Check model path in code
-- Verify model format compatibility
+- Confirm model file exists: `BioSentVec_PubMed_MIMICIII-bigram_d700.bin`
+- Must be placed in project root directory
+- File size should be ~700MB
+- Verify model format is compatible with sent2vec/gensim
 
 **Memory Error**
-- Reduce dataset size
-- Reduce number of folds
-- Use a machine with more RAM
+- Minimum 8GB RAM recommended, 16GB+ ideal
+- Close other applications during processing
+- Consider using cloud computing (Google Colab, Kaggle) for 12-16GB RAM
+- Reduce dataset size if necessary
+- Process fewer folds at a time
 
 ## Citation
 
@@ -195,7 +241,7 @@ This project reproduces the work from the following paper:
 
 **Paper Citation:**
 
-> Comito, C., Falcone, D., & Forestiero, A. (2022). *AI-Driven Clinical Decision Support: Enhancing Disease Diagnosis Exploiting Patients Similarity*. IEEE Access, 10, 6878–6888.  
+> Comito, C., Falcone, D., & Forestiero, A. (2022). *AI-Driven Clinical Decision Support: Enhancing Disease Diagnosis Exploiting Patients Similarity*. IEEE Access, 10, 6878–6888.
 > DOI: [10.1109/ACCESS.2022.3142100](https://doi.org/10.1109/ACCESS.2022.3142100)
 
 **BibTeX:**
