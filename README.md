@@ -14,13 +14,41 @@ This project implements a machine learning approach to disease diagnosis by:
 - Predicting diagnoses based on highest similarity scores
 - Evaluating performance using 10-fold cross-validation
 
+## Quick Start
+
+**For the impatient:** Get up and running in 5 minutes with conda:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/jamesEmerson112/AI-CDS-Disease-Diagnosis-Reproduction.git
+cd AI-CDS-Disease-Diagnosis-Reproduction
+
+# 2. Create conda environment (installs Python 3.9 + dependencies)
+conda env create -f environment.yml
+
+# 3. Activate environment
+conda activate disease-diagnosis
+
+# 4. Verify setup
+python test_setup.py
+
+# 5. Run the project (if all tests pass)
+python CS2V.py
+```
+
+**Note:** The conda setup automatically handles path detection in `utils/Constants.py`. See [SETUP_GUIDE.md](SETUP_GUIDE.md) for team collaboration details.
+
+**⚠️ Known Issue:** The `sent2vec` dependency may fail to install on Windows due to compiler requirements. The conda environment will still be created with all other dependencies. See detailed installation instructions below.
+
+---
+
 ## Prerequisites
 
 - **Python**: 3.8 or 3.9 (recommended)
   - **⚠️ Important:** The pre-compiled `util_cy.c` file has compatibility issues with Python 3.10+
   - For Python 3.10+, you'll need the original `.pyx` source file to recompile
 - **C Compiler**: Required for Cython compilation (GCC on Linux/Mac, MSVC on Windows)
-- **Pre-trained Model**: `BioSentVec_PubMed_MIMICIII-bigram_d700.bin` (~700MB)
+- **Pre-trained Model**: `BioSentVec_PubMed_MIMICIII-bigram_d700.bin` (~21GB)
   - This specific biomedical sentence embedding model is required
   - Download from NCBI BioSentVec or biomedical NLP resources
 
@@ -99,7 +127,7 @@ Download the required BioSentVec model:
 
 **Required Model:**
 - **Filename:** `BioSentVec_PubMed_MIMICIII-bigram_d700.bin`
-- **Size:** ~700MB
+- **Size:** ~21GB
 - **Location:** Place in the project root directory
 
 **Download Sources:**
@@ -111,7 +139,62 @@ The code expects this exact filename and will look for it in the current working
 
 ## Setup Verification
 
-After completing installation, verify your setup:
+### Automated Setup Testing
+
+The project includes `test_setup.py` - an automated verification script that checks your installation.
+
+**What it does:**
+1. **Constants Import**: Tests if utils.Constants can be imported and CH_DIR is detected
+2. **Path Validation**: Verifies the project directory exists
+3. **File Check**: Confirms all key project files are present (CS2V.py, Dataset/, etc.)
+4. **Dataset Structure**: Validates 10 cross-validation folds exist
+5. **Dependencies**: Checks that all required Python packages are installed
+
+**How to run:**
+```bash
+python test_setup.py
+```
+
+**Expected output:**
+```
+Testing Disease Diagnosis Project Setup
+
+[Test 1] Importing Constants...
+✅ SUCCESS: Constants imported
+   Project path detected: /path/to/project
+
+[Test 2] Verifying project path exists...
+✅ SUCCESS: Path exists
+
+[Test 3] Checking key project files...
+   ✅ Found: CS2V.py
+   ✅ Found: Symptoms-Diagnosis.txt
+   ...
+✅ SUCCESS: All key files found
+
+[Test 4] Checking Dataset directory...
+✅ SUCCESS: Found 10 folds in Dataset/
+
+[Test 5] Checking Python dependencies...
+   ✅ numpy
+   ✅ scipy
+   ✅ scikit-learn
+   ✅ gensim
+   ✅ Cython
+✅ SUCCESS: All dependencies installed
+
+🎉 ALL TESTS PASSED!
+```
+
+**When to run:**
+- After initial setup
+- Before running CS2V.py
+- After switching Python environments
+- When troubleshooting issues
+
+### Manual Verification (Optional)
+
+You can also verify components manually:
 
 ```bash
 # Check Python version (should be 3.8.x or 3.9.x)
@@ -220,8 +303,15 @@ Results are computed for:
 ```
 AI-CDS-Disease-Diagnosis-Reproduction/
 ├── CS2V.py                      # Main execution script
+├── test_setup.py                # Automated setup verification script
+├── setup.py                     # Cython build configuration
 ├── util_cy.c                    # Cython-optimized utility methods
 ├── Symptoms-Diagnosis.txt       # Sample input data
+├── README.md                    # Main documentation (this file)
+├── SETUP_GUIDE.md               # Quick-start guide for teams
+├── FILE_DESCRIPTIONS.txt        # Brief file descriptions (from original)
+├── environment.yml              # Conda environment specification
+├── requirements.txt             # Pip dependencies
 ├── entity/                      # Data model classes
 │   ├── __init__.py
 │   ├── Admission.py            # Admission data model
@@ -230,7 +320,7 @@ AI-CDS-Disease-Diagnosis-Reproduction/
 │   └── SymptomsDiagnosis.py    # Main symptoms-diagnosis model
 ├── utils/                       # Utility modules
 │   ├── __init__.py
-│   └── Constants.py            # Configuration constants
+│   └── Constants.py            # Configuration constants (auto-detects path)
 └── Dataset/                     # Cross-validation datasets
     ├── Fold0/
     │   ├── TrainingSet.txt
@@ -259,7 +349,7 @@ AI-CDS-Disease-Diagnosis-Reproduction/
 **Model Loading Error**
 - Confirm model file exists: `BioSentVec_PubMed_MIMICIII-bigram_d700.bin`
 - Must be placed in project root directory
-- File size should be ~700MB
+- File size should be ~21GB
 - Verify model format is compatible with sent2vec/gensim
 
 **Memory Error**
