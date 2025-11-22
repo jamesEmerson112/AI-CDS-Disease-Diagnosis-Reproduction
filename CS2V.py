@@ -22,8 +22,8 @@ from pathlib import Path
 ################################################################################################################
 #READ DATASET
 ################################################################################################################
-os.chdir(CH_DIR) # to change current working dir
-file_name = os.getcwd() + "/Symptoms-Diagnosis.txt"
+# Use proper path joining instead of changing directory
+file_name = os.path.join(CH_DIR, "Symptoms-Diagnosis.txt")
 f = open(file_name, "r").readlines()
 orig_stdout = sys.stdout
 

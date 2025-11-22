@@ -1,0 +1,14 @@
+name: disease-diagnosis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - numpy>=1.19.0
+  - scipy>=1.5.0
+  - scikit-learn>=0.23.0
+  - gensim>=3.8.0
+  - cython>=0.29.0
+  - pip
+  - pip:
+      - sent2vec>=0.1.3

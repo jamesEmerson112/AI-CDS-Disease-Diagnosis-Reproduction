@@ -40,19 +40,53 @@ git clone https://github.com/jamesEmerson112/AI-CDS-Disease-Diagnosis-Reproducti
 cd AI-CDS-Disease-Diagnosis-Reproduction
 ```
 
-### 2. Install Python Dependencies
+### 2. Verify Python Version
+Check that you have Python 3.8 or 3.9 installed:
 ```bash
-pip install numpy scipy scikit-learn gensim sent2vec Cython
+python --version
 ```
 
-Or create a virtual environment (recommended):
+**⚠️ Important:** Must be Python 3.8.x or 3.9.x (NOT 3.10 or higher due to Cython compatibility)
+
+If you need Python 3.9, download from: https://www.python.org/downloads/
+
+### 3. Create Virtual Environment (Recommended)
+Create an isolated environment for the project dependencies:
+
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install numpy scipy scikit-learn gensim sent2vec Cython
 ```
 
-### 3. Compile Cython Module
+**Activate the virtual environment:**
+
+On Windows:
+```bash
+venv\Scripts\activate
+```
+
+On Linux/Mac:
+```bash
+source venv/bin/activate
+```
+
+**Verify activation:** You should see `(venv)` at the start of your terminal prompt.
+
+### 4. Install Python Dependencies
+Install all required packages using the requirements file:
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs:
+- numpy >= 1.19.0
+- scipy >= 1.5.0
+- scikit-learn >= 0.23.0
+- gensim >= 3.8.0
+- sent2vec >= 0.1.3
+- Cython >= 0.29.0
+
+### 5. Compile Cython Module
 The `util_cy.c` file contains Cython-optimized methods. Compile it before running:
 ```bash
 python setup.py build_ext --inplace
@@ -60,7 +94,7 @@ python setup.py build_ext --inplace
 
 **Note:** If compilation fails with Python 3.10+, you'll need to use Python 3.8 or 3.9, or obtain the original `.pyx` source file from the authors.
 
-### 4. Download Pre-trained Model
+### 6. Download Pre-trained Model
 Download the required BioSentVec model:
 
 **Required Model:**
